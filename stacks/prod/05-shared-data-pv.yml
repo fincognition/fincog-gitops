@@ -9,6 +9,9 @@ spec:
   capacity:
     storage: 1Gi
   storageClassName: do-block-storage
+  claimRef:
+    name: shared-data-pvc
+    namespace: prod
   hostPath:
     path: /data
 ---
