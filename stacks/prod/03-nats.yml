@@ -16,6 +16,8 @@ spec:
       parameters:
         - name: config.jetstream.enabled
           value: "true"
+        - name: config.jetstream.fileStore.pvc.size
+          value: "1Gi"
   syncPolicy:
     automated:
       prune: false
