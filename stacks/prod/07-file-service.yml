@@ -11,10 +11,9 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      labels:
-        environment: prod
-        app: swiftly
-        service: file-service
+      environment: prod
+      app: swiftly
+      service: file-service
   template:
     metadata:
       labels:
@@ -28,7 +27,7 @@ spec:
           volumeMounts:
             - mountPath: /data
               name: shared-data-pv
-        - env:
+          env:
             - name: SUPABASE_URL
               valueFrom:
                 configMapKeyRef:
