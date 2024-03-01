@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: file-service
+  namespace: prod
+  labels:
+    environment: prod
+    app: swiftly
+    service: file-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      labels:
+        environment: prod
+        app: swiftly
+        service: file-service
+  template:
+    metadata:
+      labels:
+        environment: prod
+        app: swiftly
+        service: file-service
+    spec:
+      containers:
+        - name: file-service
+          image: singhsays/swiftly-file-service:prod
+          volumeMounts:
+            - mountPath: /data
+              name: shared-data-pv
+        - env:
+            - name: SUPABASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: SUPABASE_URL
+                  name: app-config
+            - name: SUPABASE_SERVICE_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: SUPABASE_SERVICE_KEY
+                  name: app-secrets
+            - name: NATS_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: NATS_URL
+                  name: app-config
+      restartPolicy: Always
+      volumes:
+        - name: shared-data-pv
+          persistentVolumeClaim:
+            claimName: shared-data-pvc

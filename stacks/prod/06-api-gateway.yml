@@ -1,0 +1,96 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway
+  namespace: prod
+  labels:
+    environment: prod
+    app: swiftly
+    service: api-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      labels:
+        environment: prod
+        app: swiftly
+        service: api-gateway
+  template:
+    metadata:
+      labels:
+        environment: prod
+        app: swiftly
+        service: api-gateway
+    spec:
+      containers:
+        - name: api-gateway
+          image: singhsays/swiftly-api-gateway:prod
+          ports:
+            - containerPort: 9999
+        - env:
+            - name: SUPABASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: SUPABASE_URL
+                  name: app-config
+            - name: SUPABASE_SERVICE_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: SUPABASE_SERVICE_KEY
+                  name: app-secrets
+            - name: SUPABASE_JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: SUPABASE_JWT_SECRET
+                  name: app-secrets
+            - name: NATS_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: NATS_URL
+                  name: app-config
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-gateway-svc
+  labels:
+    environment: prod
+    app: swiftly
+    service: api-gateway
+spec:
+  ports:
+    - name: "9999"
+      protocol: TCP
+      port: 9999
+      targetPort: 9999
+  selector:
+    environment: prod
+    app: swiftly
+    service: api-gateway
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: api-gateway-ingress
+  namespace: prod
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    cert-manager.io/cluster-issuer: letsencrypt-issuer
+spec:
+  rules:
+    - host: api.prod.fincognition.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: api-gateway-svc
+                port:
+                  number: 9999
+  tls:
+    - secretName: api-gateway-cert
+      hosts:
+        - api.prod.fincognition.com

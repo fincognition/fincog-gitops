@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  labels:
+    app: swiftly
+    environment: prod
+data:
+  NATS_URL: nats://nats:4222
+  SUPABASE_URL: https://tmjdzzejwjhljivupwhl.supabase.co
