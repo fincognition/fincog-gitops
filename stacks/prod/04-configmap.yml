@@ -8,3 +8,4 @@ metadata:
 data:
   NATS_URL: nats://nats:4222
   SUPABASE_URL: https://tmjdzzejwjhljivupwhl.supabase.co
+  SHARED_DATA_ROOT: /data

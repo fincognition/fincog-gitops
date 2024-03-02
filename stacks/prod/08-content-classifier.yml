@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: file-service
+  name: content-classifier
   namespace: prod
   labels:
     environment: prod
     app: swiftly
-    service: file-service
+    service: content-classifier
 spec:
   replicas: 1
   revisionHistoryLimit: 2
@@ -14,17 +14,17 @@ spec:
     matchLabels:
       environment: prod
       app: swiftly
-      service: file-service
+      service: content-classifier
   template:
     metadata:
       labels:
         environment: prod
         app: swiftly
-        service: file-service
+        service: content-classifier
     spec:
       containers:
-        - name: file-service
-          image: singhsays/swiftly-file-service:sha-a747877
+        - name: content-classifier
+          image: singhsays/swiftly-content-classifier:sha-4ae7970
           volumeMounts:
             - mountPath: /data
               name: shared-data-pv
