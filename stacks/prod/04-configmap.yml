@@ -6,6 +6,10 @@ metadata:
     app: swiftly
     environment: prod
 data:
+  AZURE_PROVIDER_ENDPOINT: https://fincog-docai-prod.cognitiveservices.azure.com/
+  AZURE_PROVIDER_API_REGION: westus2
+  AZURE_PROVIDER_API_VERSION: 2023-10-31-preview
   NATS_URL: nats://nats:4222
   SUPABASE_URL: https://tmjdzzejwjhljivupwhl.supabase.co
+  SUPABASE_DB_URL: postgres://postgres.tmjdzzejwjhljivupwhl:g3Xr4PmVClqbGhU5@aws-0-us-west-1.pooler.supabase.com:5432/postgres
   SHARED_DATA_ROOT: /data
