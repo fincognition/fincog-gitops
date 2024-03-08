@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: model-service
+  namespace: prod
+  labels:
+    environment: prod
+    app: swiftly
+    service: model-service
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      environment: prod
+      app: swiftly
+      service: model-service
+  template:
+    metadata:
+      labels:
+        environment: prod
+        app: swiftly
+        service: model-service
+    spec:
+      containers:
+        - name: model-service
+          image: singhsays/swiftly-model-service:sha-a0c0cba
+          volumeMounts:
+            - mountPath: /data
+              name: shared-data-pv
+          env:
+            - name: NATS_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: NATS_URL
+                  name: app-config
+            - name: SHARED_DATA_ROOT
+              valueFrom:
+                configMapKeyRef:
+                  key: SHARED_DATA_ROOT
+                  name: app-config
+            - name: AZURE_PROVIDER_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  key: AZURE_PROVIDER_ENDPOINT
+                  name: app-config
+            - name: AZURE_PROVIDER_API_REGION
+              valueFrom:
+                configMapKeyRef:
+                  key: AZURE_PROVIDER_API_REGION
+                  name: app-config
+            - name: AZURE_PROVIDER_API_VERSION
+              valueFrom:
+                configMapKeyRef:
+                  key: AZURE_PROVIDER_API_VERSION
+                  name: app-config
+            - name: AZURE_PROVIDER_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: AZURE_PROVIDER_API_KEY
+                  name: app-secrets
+      restartPolicy: Always
+      volumes:
+        - name: shared-data-pv
+          persistentVolumeClaim:
+            claimName: shared-data-pvc
