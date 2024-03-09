@@ -24,23 +24,11 @@ spec:
     spec:
       containers:
         - name: content-classifier
-          image: singhsays/swiftly-content-classifier:sha-16730b8
-          volumeMounts:
-            - mountPath: /data
-              name: shared-data-pv
+          image: singhsays/swiftly-content-classifier:sha-74e07e8
           env:
             - name: NATS_URL
               valueFrom:
                 configMapKeyRef:
                   key: NATS_URL
                   name: app-config
-            - name: SHARED_DATA_ROOT
-              valueFrom:
-                configMapKeyRef:
-                  key: SHARED_DATA_ROOT
-                  name: app-config
       restartPolicy: Always
-      volumes:
-        - name: shared-data-pv
-          persistentVolumeClaim:
-            claimName: shared-data-pvc

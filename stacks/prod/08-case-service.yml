@@ -24,10 +24,7 @@ spec:
     spec:
       containers:
         - name: case-service
-          image: singhsays/swiftly-case-service:sha-16730b8
-          volumeMounts:
-            - mountPath: /data
-              name: shared-data-pv
+          image: singhsays/swiftly-case-service:sha-74e07e8
           env:
             - name: NATS_URL
               valueFrom:
@@ -36,11 +33,7 @@ spec:
                   name: app-config
             - name: SUPABASE_DB_URL
               valueFrom:
-                configMapKeyRef:
+                secretKeyRef:
                   key: SUPABASE_DB_URL
-                  name: app-config
+                  name: app-secrets
       restartPolicy: Always
-      volumes:
-        - name: shared-data-pv
-          persistentVolumeClaim:
-            claimName: shared-data-pvc
