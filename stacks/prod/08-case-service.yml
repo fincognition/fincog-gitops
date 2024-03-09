@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: case-service
-          image: singhsays/swiftly-case-service:sha-a0c0cba
+          image: singhsays/swiftly-case-service:sha-16730b8
           volumeMounts:
             - mountPath: /data
               name: shared-data-pv
