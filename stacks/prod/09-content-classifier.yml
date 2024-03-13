@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: content-classifier
-          image: singhsays/swiftly-content-classifier:sha-541e4b7
+          image: singhsays/swiftly-content-classifier:sha-44eb0b2
           env:
             - name: NATS_URL
               valueFrom:

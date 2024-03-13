@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: file-service
-          image: singhsays/swiftly-file-service:sha-541e4b7
+          image: singhsays/swiftly-file-service:sha-44eb0b2
           env:
             - name: SUPABASE_URL
               valueFrom:
