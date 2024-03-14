@@ -11,3 +11,4 @@ data:
   AZURE_PROVIDER_API_VERSION: 2023-10-31-preview
   NATS_URL: nats://nats:4222
   SUPABASE_URL: https://tmjdzzejwjhljivupwhl.supabase.co
+  SHARED_DATA_ROOT: /data

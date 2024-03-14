@@ -25,6 +25,9 @@ spec:
       containers:
         - name: file-service
           image: singhsays/swiftly-file-service:sha-44eb0b2
+          volumeMounts:
+            - mountPath: /data
+              name: shared-data-volume-pv
           env:
             - name: SUPABASE_URL
               valueFrom:
@@ -41,4 +44,13 @@ spec:
                 configMapKeyRef:
                   key: NATS_URL
                   name: app-config
+            - name: SHARED_DATA_ROOT
+              valueFrom:
+                configMapKeyRef:
+                  key: SHARED_DATA_ROOT
+                  name: app-config
       restartPolicy: Always
+      volumes:
+        - name: shared-data-volume-pv
+          persistentVolumeClaim:
+            claimName: shared-data-volume-pvc
