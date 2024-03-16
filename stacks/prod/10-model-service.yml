@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: model-service
-          image: singhsays/swiftly-model-service:sha-e30c36a
+          image: singhsays/swiftly-model-service:sha-42fb2ee
           volumeMounts:
             - mountPath: /data
               name: shared-data-volume-pv
