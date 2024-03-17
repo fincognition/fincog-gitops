@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: content-classifier
-          image: singhsays/swiftly-content-classifier:sha-e9621f5
+          image: singhsays/swiftly-content-classifier:sha-2e50d71
           volumeMounts:
             - mountPath: /data
               name: shared-data-volume-pv
