@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
         - name: api-gateway
-          image: singhsays/swiftly-api-gateway:sha-18d6d09
+          image: singhsays/swiftly-api-gateway:sha-192de24
           ports:
             - containerPort: 9999
           env:
